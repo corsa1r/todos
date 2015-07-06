@@ -1,0 +1,12 @@
+<md-subheader>Please login</md-subheader>
+<form ng-submit="login()">
+	<md-input-container>
+		<label class="md-padding">Enter email address</label>
+		<input required ng-model="user.email" type="email">
+	</md-input-container>
+	<md-input-container>
+		<label>Enter Password</label>
+		<input required ng-model="user.password" type="password">
+	</md-input-container>
+	<md-button>Login</md-button>
+</form>
