@@ -15,8 +15,8 @@
         <script src="https://ajax.googleapis.com/ajax/libs/angular_material/0.9.4/angular-material.min.js"></script>
         <script src="https://cdn.firebase.com/js/client/2.2.4/firebase.js"></script>
         <script src="https://cdn.firebase.com/libs/angularfire/1.1.2/angularfire.min.js"></script>
-        <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <!-- <script type="text/javascript" src="cordova.js"></script> -->
+        <script type="text/javascript" src="js/index-build.js"></script>
     </head>
     
     <body ng-controller="BaseController">
@@ -27,7 +27,10 @@
                 <md-list layout-padding>
                     <md-list-item class="md-3-line" ng-repeat="todo in todos | orderBy : 'priority' : true" ng-if="!todo.checked">
                         <div class="md-list-item-text">
-                            <h3>{{todo.priority}} at {{todo.date_added | date : 'dd.MMM.yyyy'}} ({{todo.date_added | date : 'HH:mm:ssa'}})</h3>
+                            <h3>
+                                <span ng-repeat="_ in ((_ = []) && (_.length=todo.priority) && _) track by $index">!</span> 
+                                at {{todo.date_added | date : 'dd.MMM.yyyy'}} ({{todo.date_added | date : 'HH:mm:ssa'}})
+                            </h3>
                             <p>{{todo.text}}</p>
                         </div>
                         <md-checkbox class="md-secondary" ng-model="todo.checked" ng-change="toggle(todo)"></md-checkbox>
