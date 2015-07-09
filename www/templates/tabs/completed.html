@@ -1,0 +1,11 @@
+<md-subheader class="md-primary">Your recently completed tasks ({{total(true)}})</md-subheader>
+<md-list layout-padding>
+	<md-list-item ng-repeat="todo in todos | orderBy : 'updated_date' : true" ng-if="todo.checked" ng-click="expand($event, todo)">
+		<p>
+			<span ng-repeat="_ in ((_ = []) && (_.length=todo.priority) && _) track by $index">!</span>
+			{{ todo.text }}
+		</p>
+		<md-checkbox class="md-secondary" ng-checked="true"></md-checkbox>
+		<md-divider></md-divider>
+	</md-list-item>
+</md-list>

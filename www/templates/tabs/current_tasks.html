@@ -1,0 +1,12 @@
+<md-subheader class="md-primary">Your current tasks ({{total(false)}})</md-subheader>
+<md-list layout-padding>
+	<md-list-item class="md-3-line" ng-repeat="todo in todos | orderBy : 'priority' : true" ng-if="!todo.checked">
+		<div class="md-list-item-text">
+			<h3>
+				<span ng-repeat="_ in ((_ = []) && (_.length=todo.priority) && _) track by $index">!</span>at {{todo.date_added | date : 'dd.MMM.yyyy'}} ({{todo.date_added | date : 'HH:mm:ssa'}})</h3>
+			<p>{{todo.text}}</p>
+		</div>
+		<md-checkbox class="md-secondary" ng-model="todo.checked" ng-change="toggle(todo)"></md-checkbox>
+		<md-divider></md-divider>
+	</md-list-item>
+</md-list>

@@ -1,36 +1,14 @@
 <md-tabs md-dynamic-height md-border-bottom>
 	<md-tab label="Current tasks">
-		<md-subheader class="md-primary">Your current tasks ({{total(false)}})</md-subheader>
-		<md-list layout-padding>
-			<md-list-item class="md-3-line" ng-repeat="todo in todos | orderBy : 'priority' : true" ng-if="!todo.checked">
-				<div class="md-list-item-text">
-					<h3>
-						<span ng-repeat="_ in ((_ = []) && (_.length=todo.priority) && _) track by $index">!</span>at {{todo.date_added | date : 'dd.MMM.yyyy'}} ({{todo.date_added | date : 'HH:mm:ssa'}})</h3>
-					<p>{{todo.text}}</p>
-				</div>
-				<md-checkbox class="md-secondary" ng-model="todo.checked" ng-change="toggle(todo)"></md-checkbox>
-				<md-divider></md-divider>
-			</md-list-item>
-		</md-list>
+		<ng-include src="'./templates/tabs/current_tasks.html'"></ng-include>
 	</md-tab>
 	<md-tab label="Completed">
-		<md-subheader class="md-primary">Your recently completed tasks ({{total(true)}})</md-subheader>
-		<md-list layout-padding>
-			<md-list-item ng-repeat="todo in todos | orderBy : 'updated_date' : true" ng-if="todo.checked">
-				<p>{{ todo.text }}</p>
-				<md-checkbox class="md-secondary" ng-model="todo.checked" ng-change="toggle(todo)"></md-checkbox>
-				<md-divider></md-divider>
-			</md-list-item>
-		</md-list>
+		<ng-include src="'./templates/tabs/completed.html'"></ng-include>
 	</md-tab>
 	<md-tab label="new">
-		<md-subheader class="md-no-sticky">Create new task</md-subheader>
-		<md-input-container class="md-icon-float">
-			<label>enter task name here</label>
-			<input ng-model="taskName" type="text" md-minlength="10">
-		</md-input-container>
-		<md-subheader class="md-no-sticky">Set your priority</md-subheader>
-		<md-slider flex md-discrete ng-model="priority" step="1" min="1" max="10" aria-label="rating"></md-slider>
-		<md-button class="md-raised" ng-click="create()">Create the task</md-button>
+		<ng-include src="'./templates/tabs/new.html'"></ng-include>
+	</md-tab>
+	<md-tab label="profile">
+		<ng-include src="'./templates/tabs/profile.html'"></ng-include>
 	</md-tab>
 </md-tabs>

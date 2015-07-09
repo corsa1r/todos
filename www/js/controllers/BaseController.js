@@ -8,7 +8,7 @@ module.exports = [
 	'$location',
 	function ($scope, $rootScope, $firebaseAuth, $firebaseRef, $mdToast, $toast, $location) {
 		$scope.authentication = $firebaseAuth($firebaseRef);
-		
+
 		$scope.user = {};
 		$scope.user.email = '';
 		$scope.user.password = '';
@@ -18,6 +18,9 @@ module.exports = [
 				email: $scope.user.email,
 				password: $scope.user.password
 			}).then(function (authData) {
+				authData.custom = {}
+				authData.custom.lastLogin = Date.now();
+
 				$rootScope.auth = authData;
 				$location.path('/todos');
 			}).catch(function (error) {

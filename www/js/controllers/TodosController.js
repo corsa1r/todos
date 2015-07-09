@@ -8,7 +8,9 @@ module.exports = [
 	'$toast',
 	'ConfigFactory',
 	'$location',
-	function ($scope, $rootScope, $firebaseArray, $firebaseRef, $mdToast, $toast, ConfigFactory, $location) {
+	'$mdDialog',
+	'$q',
+	function ($scope, $rootScope, $firebaseArray, $firebaseRef, $mdToast, $toast, ConfigFactory, $location, $mdDialog, $q) {
 
 		if (!$rootScope.auth) {
 			$location.path('/');
@@ -41,7 +43,11 @@ module.exports = [
 			});
 		};
 
-		$scope.toggle = function (todo) {
+		$scope.toggle = function (todo, fromModal) {
+			if (fromModal) {
+				todo.checked = false;
+			}
+
 			$mdToast.show($toast(todo.text + ' was updated'));
 			todo.updated_date = Date.now();
 			$scope.todos.$save(todo);
@@ -56,4 +62,31 @@ module.exports = [
 			});
 			return result;
 		};
+
+		$scope.showConfirm = function ($event, title, content, okBtnText) {
+			// Appending dialog to document.body to cover sidenav in docs app
+			var confirm = $mdDialog.confirm()
+				.parent(angular.element(document.body))
+				.title(title)
+				.content(content)
+			//.ariaLabel('Lucky day')
+				.ok(okBtnText || 'OK')
+				.cancel('CANCEL')
+				.targetEvent($event);
+			return $mdDialog.show(confirm);
+		};
+
+		$scope.logout = function ($event) {
+			$scope.showConfirm($event, 'Are you sure you want to logout', 'you can login again later').then(function () {
+				$rootScope.auth = null;
+				$location.path('/');
+				return false;
+			});
+		};
+
+		$scope.expand = function ($event, todo) {
+			$scope.showConfirm($event, 'Task with ' + todo.priority + ' priority', todo.text, 'Todo again').then(function () {
+				$scope.toggle(todo, true);
+			});
+		}
 	}];

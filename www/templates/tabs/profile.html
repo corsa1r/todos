@@ -1,0 +1,12 @@
+<md-content>
+	<md-subheader class="md-primary">Profile</md-subheader>
+	<md-list-item class="md-3-line">
+		<img ng-src="{{auth.password.profileImageURL}}" class="md-avatar" alt="Gravatar image" />
+		<div class="md-list-item-text">
+			<h3>{{ auth.password.email.split('@')[0] }}</h3>
+			<h3>{{ auth.password.email }}</h3>
+			<p>Last login at : {{auth.custom.lastLogin | date}}</p>
+		</div>
+	</md-list-item>
+	<md-button class="md-raised md-warn" ng-click="logout()">Sign out</md-button>
+</md-content>
